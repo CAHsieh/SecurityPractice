@@ -7,7 +7,12 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.safetynet.SafetyNet
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 const val PLAY_SERVICES_RESOLUTION_REQUEST = 0x01
 const val PLAY_SERVICES_DISABLE = 0x02
@@ -19,6 +24,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        //Note: To minimize the impact of your app's initialization, call initSafeBrowsing()
+        // as early as possible in your activity's onResume() method.
+        val activity = this
+        GlobalScope.launch(Dispatchers.Main) {
+            val job = this.async {
+                SafetyNet.getClient(activity).initSafeBrowsing()
+            }
+            job.await()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        SafetyNet.getClient(this).shutdownSafeBrowsing()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

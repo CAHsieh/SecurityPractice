@@ -2,7 +2,6 @@ package pet.ca.securitypractice.safetynet.attestation
 
 import android.content.Context
 import android.util.Log
-import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.safetynet.SafetyNet
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.json.webtoken.JsonWebSignature
@@ -12,6 +11,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import pet.ca.securitypractice.BuildConfig
+import pet.ca.securitypractice.safetynet.ApiFailureListener
 import java.io.IOException
 import java.security.GeneralSecurityException
 import java.security.SecureRandom
@@ -50,23 +50,7 @@ class Attestation {
                         val stmt = parseAndVerify(response.jwsResult)
                         callback.invoke(stmt)
                     }
-                    .addOnFailureListener { e ->
-                        // An error occurred while communicating with the service.
-
-                        // An error with the Google Play services API contains some
-                        // additional details.
-                        if (e is ApiException) {
-
-                            // You can retrieve the status code using the
-                            // apiException.statusCode property.
-                            Log.e(TAG_ATTESTATION, "ApiException Status Code: " + e.statusCode)
-                        } else {
-
-                            // A different, unknown type of error occurred.
-                            Log.d(TAG_ATTESTATION, "Error: " + e.message)
-                        }
-                        callback.invoke(null)
-                    }
+                    .addOnFailureListener (ApiFailureListener)
 
             }
 

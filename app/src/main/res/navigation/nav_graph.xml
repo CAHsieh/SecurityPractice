@@ -17,10 +17,24 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/action_mainFragment_to_safeBrowsingFragment"
+            app:destination="@id/safeBrowsingFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/attestationFragment"
         android:name="pet.ca.securitypractice.safetynet.attestation.AttestationFragment"
         android:label="fragment_attestation"
         tools:layout="@layout/fragment_attestation" />
+
+    <fragment
+        android:id="@+id/safeBrowsingFragment"
+        android:name="pet.ca.securitypractice.safetynet.safebrowsing.SafeBrowsingFragment"
+        android:label="fragment_safeBrowsing"
+        tools:layout="@layout/fragment_safe_browsing" />
 </navigation>

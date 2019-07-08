@@ -36,13 +36,10 @@ class MainFragment : Fragment() {
         when (apiAvailability.isGooglePlayServicesAvailable(activity, 13000000)) {
             ConnectionResult.SUCCESS -> {
                 btnAttestation.setOnClickListener {
-                    //                    val attestation = Attestation()
-//                    attestation.start(it.context)
-                    val extras = FragmentNavigatorExtras(btnAttestation to "transition_title")
-                    findNavController().navigate(
-                        R.id.action_mainFragment_to_attestationFragment,
-                        null, null, extras
-                    )
+                    gotoAttestationFragment()
+                }
+                btnSafeBrowsing.setOnClickListener {
+                    gotoSafeBrowsingFragment()
                 }
             }
             ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED -> {
@@ -54,5 +51,21 @@ class MainFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun gotoAttestationFragment() {
+        val extras = FragmentNavigatorExtras(btnAttestation to "transition_title")
+        findNavController().navigate(
+            R.id.action_mainFragment_to_attestationFragment,
+            null, null, extras
+        )
+    }
+
+    private fun gotoSafeBrowsingFragment() {
+        val extras = FragmentNavigatorExtras(btnSafeBrowsing to "transition_title")
+        findNavController().navigate(
+            R.id.action_mainFragment_to_safeBrowsingFragment,
+            null, null, extras
+        )
     }
 }
