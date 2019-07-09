@@ -41,6 +41,12 @@ class MainFragment : Fragment() {
                 btnSafeBrowsing.setOnClickListener {
                     gotoSafeBrowsingFragment()
                 }
+                btnVerifyApps.setOnClickListener {
+                    gotoVerifyAppsFragment()
+                }
+                btnJNI.setOnClickListener {
+                    gotoJniVerifyFragment()
+                }
             }
             ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED -> {
                 apiAvailability.showErrorDialogFragment(
@@ -65,6 +71,22 @@ class MainFragment : Fragment() {
         val extras = FragmentNavigatorExtras(btnSafeBrowsing to "transition_title")
         findNavController().navigate(
             R.id.action_mainFragment_to_safeBrowsingFragment,
+            null, null, extras
+        )
+    }
+
+    private fun gotoVerifyAppsFragment() {
+        val extras = FragmentNavigatorExtras( btnVerifyApps to "transition_title")
+        findNavController().navigate(
+            R.id.action_mainFragment_to_verifyAppsFragment,
+            null, null, extras
+        )
+    }
+
+    private fun gotoJniVerifyFragment() {
+        val extras = FragmentNavigatorExtras(btnJNI to "transition_title")
+        findNavController().navigate(
+            R.id.action_mainFragment_to_jniVerifyFragment,
             null, null, extras
         )
     }
